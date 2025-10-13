@@ -1,0 +1,23 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: calc(var(--vh, 1vh) * 100);
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(2px);
+  animation-duration: 0.3s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-iteration-count: 1;
+  animation-name: backdropFadeIn;
+}
+
+@keyframes backdropFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

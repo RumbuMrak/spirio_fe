@@ -1,0 +1,24 @@
+/* Force Stream video to cover entire screen while centered */
+.fullstage video {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  min-width: 100% !important;
+  min-height: 100% !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+}
+
+.fullstage :global(.str-video__participant-view),
+.fullstage :global(.str-video__participant-view__video-wrapper),
+.fullstage :global(.str-video__participant-view__media) {
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: relative !important;
+}

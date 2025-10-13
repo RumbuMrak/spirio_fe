@@ -1,0 +1,133 @@
+.topbar {
+  background-color: theme('colors.transparent');
+  transition:
+  background-color 0.3s,
+  box-shadow 0.3s;
+  z-index: 10;
+  
+  &[data-scrolled='true'] {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: theme('colors.background');
+    box-shadow: theme('boxShadow.DEFAULT');
+
+    & > header {
+      padding-top: 0.75rem;
+      padding-bottom: 0.75rem;
+      @media (min-width: calc(theme('screens.lg'))) {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+      }
+    }
+  }
+
+  & > header {
+    display: flex;
+    align-items: center;
+    max-width: 1440px;
+    gap: 1.5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin: 0 auto;
+    transition: padding 0.3s;
+    @media (min-width: calc(theme('screens.lg'))) {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
+  }
+}
+
+.topbar__logo {
+  margin-right: auto;
+
+  & > svg {
+    color: theme('colors.white');
+    height: 2.5rem;
+  }
+}
+.topbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  @media (max-width: calc(theme('screens.lg') - 1px)) {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1.875rem;
+  }
+}
+
+.topbar__nav {
+  & > ul a {
+    white-space: nowrap;
+
+    &[data-active='true'] {
+      text-decoration: underline;
+      text-underline-offset: 8px;
+      text-decoration-thickness: 2px;
+    }
+  }
+
+  @media (max-width: calc(theme('screens.lg') - 1px)) {
+    position: fixed;
+    right: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    height: calc(var(--vh, 1vh) * 100);
+    width: 100%;
+    max-width: 25rem;
+    background-color: theme('colors.background');
+    transform: translateX(100%);
+    box-shadow: theme('boxShadow.DEFAULT');
+    transition: transform 0.2s;
+    z-index: 10;
+
+    &[data-state='open'] {
+      transform: translateX(0);
+    }
+
+    & > ul {
+      display: flex;
+      flex-direction: column;
+      padding: 1.875rem;
+      overflow: auto;
+      font-size: theme('fontSize.xl');
+      font-weight: 500;
+      flex-grow: 1;
+      gap: 0.875rem;
+    }
+  }
+
+  @media (min-width: calc(theme('screens.lg'))) {
+    display: flex;
+    gap: 2rem;
+    position: relative;
+    margin-left: auto;
+    & > ul {
+      display: flex;
+      align-items: center;
+      font-size: theme('fontSize.sm');
+      gap: 2rem;
+      font-weight: 500;
+
+      & a {
+        padding: 0.25rem 0;
+        transition: color 0.3s;
+        &:hover {
+          color: theme('colors.primary.DEFAULT');
+        }
+      }
+    }
+  }
+
+  @media (min-width: calc(theme('screens.lg'))) and (max-width: calc(theme('screens.xl') - 1px)) {
+    gap: 1.5rem;
+    & > ul {
+      font-size: theme('fontSize.xs');
+      gap: 1.5rem;
+    }
+  }
+}

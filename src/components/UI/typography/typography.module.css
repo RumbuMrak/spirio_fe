@@ -1,0 +1,41 @@
+.h1 {
+  font-size: 3rem;
+  font-weight: 600;
+  line-height: 1.1;
+
+  @media (min-width: calc(theme('screens.lg'))) {
+    font-size: 5rem;
+  }
+}
+.h2 {
+  font-size: 1.875rem;
+  font-weight: 600;
+  line-height: 1.14;
+
+  @media (min-width: calc(theme('screens.lg'))) {
+    font-size: 3.75rem;
+  }
+}
+.h3 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  line-height: 1.25;
+
+  @media (min-width: calc(theme('screens.lg'))) {
+    font-size: 2.875rem;
+  }
+}
+.h4 {
+  font-size: 1.875rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.gradient-title {
+  display: inline-block;
+  font-weight: 600;
+  background: linear-gradient(133deg, #d41cff 18.5%, #febe0c 140.83%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

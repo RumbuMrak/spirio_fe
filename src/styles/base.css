@@ -1,0 +1,18 @@
+@tailwind base;
+@layer base {
+  :root {
+    --topbar-height: 4.5rem;
+    @media (min-width: theme('screens.lg')) {
+      --topbar-height: 6.5625rem;
+    }
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: theme('colors.background');
+    color: theme('colors.white');
+    /* margin-top: var(--topbar-height); */
+  }
+}

@@ -1,0 +1,36 @@
+.scrollbar {
+  display: flex;
+  touch-action: none;
+  use-select: none;
+  background-color: theme('colors.white');
+  padding: 0.125rem;
+  transition: background-color 150ms ease-out;
+
+  &[data-orientation='horizontal'] {
+    height: 0.625rem;
+    flex-direction: column;
+  }
+
+  &[data-orientation='vertical'] {
+    width: 0.625rem;
+  }
+}
+
+.thumb {
+  position: relative;
+  flex: 1;
+  border-radius: theme('borderRadius.md');
+  background-color: theme('colors.gray.100');
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    height: 100%;
+    min-height: 1.75rem;
+    width: 100%;
+    min-width: 1.75rem;
+    transform: translate(-50%, -50%);
+  }
+}

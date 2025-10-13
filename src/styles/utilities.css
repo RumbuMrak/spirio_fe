@@ -1,0 +1,84 @@
+@import "slick-carousel/slick/slick.css";
+
+/* Custom animation delays for enhanced notifications */
+.animation-delay-75 {
+  animation-delay: 75ms;
+}
+
+.animation-delay-150 {
+  animation-delay: 150ms;
+}
+
+.animation-delay-300 {
+  animation-delay: 300ms;
+}
+
+/* Enhanced attention-grabbing animations */
+@keyframes urgent-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+}
+
+.animate-urgent-pulse {
+  animation: urgent-pulse 1s ease-in-out infinite;
+}
+
+@keyframes critical-shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-2px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(2px);
+  }
+}
+
+.animate-critical-shake {
+  animation: critical-shake 0.5s ease-in-out infinite;
+}
+
+/*  */
+
+/* Gradient System */
+:root {
+  --grad-primary-start: #5CC1FF;
+  --grad-primary-end: #B6DC36;
+  --grad-accent-start: #8C4DFF;
+  --grad-accent-end: #FF7AC3;
+}
+
+.bg-grad-primary {
+  background-image: linear-gradient(135deg, var(--grad-primary-start) 0%, var(--grad-primary-end) 100%);
+}
+
+.bg-grad-accent {
+  background-image: linear-gradient(135deg, var(--grad-accent-start) 0%, var(--grad-accent-end) 100%);
+}
+
+.text-grad-primary {
+  background: linear-gradient(135deg, var(--grad-primary-start) 0%, var(--grad-primary-end) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+.overlay-hero {
+  position: relative;
+}
+.overlay-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.15));
+  pointer-events: none;
+}
+

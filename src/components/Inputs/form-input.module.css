@@ -1,0 +1,287 @@
+.form-input {
+  display: block;
+  width: 100%;
+  border-radius: theme('borderRadius.DEFAULT');
+  background-color: theme('colors.white');
+  color: theme('colors.gray.DEFAULT');
+  background-clip: border-box;
+  font-weight: theme('fontWeight.500');
+  border: 1px solid theme('colors.transparent');
+  padding: 1rem 1rem;
+  outline: none;
+  line-height: 1.375;
+
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover {
+    border: 1px solid theme('colors.transparent');
+    -webkit-text-fill-color: theme('colors.gray.DEFAULT');
+    -webkit-box-shadow: 0 0 0px 1000px theme('colors.white') inset;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
+  &:-webkit-autofill:focus {
+    border: 1px solid theme('colors.transparent');
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
+  &[data-color='dark'] {
+    background-color: theme('colors.primary.700');
+    color: theme('colors.white');
+
+    &::placeholder {
+      color: #c6aee4;
+    }
+
+    &[aria-invalid='true'] {
+      border-color: theme('colors.error.DEFAULT');
+      background-color: theme('colors.primary.700');
+  
+      &::placeholder {
+        color: theme('colors.error.100');
+      }
+    }
+  }
+
+  &:focus {
+    border-color: theme('colors.primary.500') !important;
+    box-shadow: 0 0 0.5rem theme('colors.primary.500');
+  }
+  &::placeholder {
+    color: rgba(42, 28, 60, 0.5);
+  }
+  &[disabled] {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+  &[aria-invalid='true'] {
+    border-color: theme('colors.error.DEFAULT');
+    background-color: theme('colors.error.100');
+
+    &::placeholder {
+      color: theme('colors.error.DEFAULT');
+    }
+  }
+
+  &[type='number'] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+
+  &[type='date']::-webkit-inner-spin-button,
+  &[type='date']::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+  }
+
+  &[type='time'] {
+    line-height: 1.375;
+  }
+  &[type='time']::-webkit-inner-spin-button,
+  &[type='time']::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+  }
+
+  &__error {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+    line-height: 1.25;
+    color: theme('colors.error.DEFAULT');
+    margin-top: 0.25rem;
+
+    & > span {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background-color: theme('colors.error.DEFAULT');
+      color: theme('colors.black');
+      border-radius: theme('borderRadius.full');
+      font-size: 0.625rem;
+      width: 0.75rem;
+      height: 0.75rem;
+    }
+  }
+  &__label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: theme('fontWeight.500');
+    margin-bottom: 0.25rem;
+  }
+  &__note {
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+  }
+
+  &[data-size='sm'] {
+    padding: 0.4375rem 0.875rem;
+  }
+
+  &[data-icon='true'] {
+    padding-left: 2.375rem;
+  }
+}
+
+.form-checkbox {
+  position: fixed;
+  left: -2000px;
+  @apply sr-only;
+
+  &:checked {
+    & + span {
+      background-color: theme('colors.primary.DEFAULT');
+      & > svg {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+  }
+  &:focus {
+    & + span {
+      border-color: theme('colors.primary.500') !important;
+      box-shadow: var(--input-focus);
+    }
+  }
+  &[aria-invalid='true'] {
+    & + span {
+      border-color: theme('colors.error.DEFAULT');
+      background-color: theme('colors.error.800');
+    }
+    & + span + div {
+      color: theme('colors.error.DEFAULT');
+    }
+  }
+
+  & + span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 4px;
+    width: 1.25rem;
+    height: 1.25rem;
+    background-color: theme('colors.gray.100');
+    background-clip: border-box;
+    border: 1px solid theme('colors.transparent');
+    transition:
+      background-color 0.3s,
+      border-color 0.3s;
+
+    & > svg {
+      color: theme('colors.white');
+      width: 0.75rem;
+      opacity: 0;
+      transform: scale(0.5);
+      transition:
+        opacity 0.3s,
+        transform 0.3s;
+    }
+  }
+}
+
+.form-select {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-basis: 100%;
+
+  &[data-state='open'] {
+    border-color: theme('colors.primary.500');
+    box-shadow: var(--input-focus);
+  }
+  &[data-placeholder] {
+    color: rgba(42, 28, 60, 0.5);
+  }
+}
+.form-select-item {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  color: theme('colors.black');
+  padding: 0.5rem 0.875rem;
+
+  &:hover {
+    background-color: theme('colors.primary.625');
+    color: theme('colors.white');
+  }
+
+  &[data-disabled] {
+    pointer-events: none;
+    cursor: not-allowed;
+    opacity: 0.5;
+    color: theme('colors.gray.DEFAULT');
+  }
+
+  &[data-highlighted],
+  &[data-headlessui-state='active'] {
+    background-color: theme('colors.primary.625');
+    color: theme('colors.white');
+  }
+}
+
+.form-switcher {
+  position: fixed;
+  left: -2000px;
+  @apply sr-only;
+
+  &:checked {
+    & + span {
+      background-color: theme('colors.primary.DEFAULT');
+      border-color: theme('colors.primary.DEFAULT');
+
+      &::before {
+        left: calc(100% - 1.25rem - 0.125rem);
+      }
+    }
+  }
+  &:focus {
+    & + span {
+      border-color: theme('colors.primary.500') !important;
+      box-shadow: var(--input-focus);
+    }
+  }
+  &[aria-invalid='true'] {
+    & + span {
+      border-color: theme('colors.error.DEFAULT');
+      background-color: theme('colors.error.800');
+    }
+    & + span + div {
+      color: theme('colors.error.DEFAULT');
+    }
+  }
+
+  & + span {
+    position: relative;
+    flex-shrink: 0;
+    border-radius: 50px;
+    width: 2.75rem;
+    height: 1.625rem;
+    background-color: theme('colors.gray.100');
+    border: 1px solid theme('colors.gray.100');
+    transition:
+      background-color 0.3s,
+      border-color 0.3s;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0.125rem;
+      left: 0.125rem;
+      width: 1.25rem;
+      height: 1.25rem;
+      border-radius: 50%;
+      background-color: theme('colors.white');
+      transition: left 0.3s;
+    }
+  }
+}

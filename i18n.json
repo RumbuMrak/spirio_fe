@@ -1,0 +1,19 @@
+{
+  "locales": [
+    "cs"
+  ],
+  "defaultLocale": "cs",
+  "pages": {
+    "*": [
+      "common",
+      "errors"
+    ],
+    "/": [
+      "homepage"
+    ],
+    "rgx:/app/*": [
+      "app"
+    ]
+  },
+  "nsSeparator": "."
+}

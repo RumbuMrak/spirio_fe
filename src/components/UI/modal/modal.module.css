@@ -1,0 +1,60 @@
+.modal__overlay {
+  background-color: rgba(15, 6, 51, 0.64);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  backdrop-filter: blur(20px);
+  z-index: 11;
+}
+.modal__container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  @media (min-width: calc(theme('screens.sm'))) {
+    padding: 2rem 0;
+  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  overflow: auto;
+  z-index: 12;
+
+  & > * {
+    margin: auto;
+  }
+}
+.modal__content {
+  position: relative;
+  background-color: theme('colors.background');
+  padding: 2rem;
+  max-width: 100vw;
+  overflow: hidden;
+  @media (min-width: calc(theme('screens.sm'))) {
+    border-radius: theme('borderRadius.DEFAULT');
+    max-height: calc(100vh - 4rem);
+    overflow-y: auto;
+  }
+  @media (max-width: calc(theme('screens.sm') - 0px)) {
+    display: flex;
+    flex-direction: column;
+    width: 100vw !important;
+    height: theme('height.screen-height');
+    max-height: theme('height.screen-height');
+    padding: 1.5rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+}
+.modal__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+  align-self: flex-start;
+  margin-bottom: 1rem;
+}

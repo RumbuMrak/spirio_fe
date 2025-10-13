@@ -1,0 +1,116 @@
+.slider {
+    --thumb-color: #ddcd54; /* Thumb (dot) color - Gold */
+    --track-color: #6b21a8; /* Background track color - Dark Purple */
+    --filled-track-color: #6b21a8; /* Filled progress color - Light Purple */
+   /* a855f7*/
+    width: 100%;
+    appearance: none;
+    height: 16px;
+    background: var(--track-color);
+    border-radius: 9999px;
+    outline: none;
+
+  }
+  
+  /* Ensure the filled portion is styled correctly */
+  .slider::-webkit-slider-runnable-track {
+    height: 6px;
+    background: var(--filled-track-color);
+    border-radius: 9999px;
+  }
+  
+  /* 🟡 Fix Grey Dot Issue - Apply Custom Thumb Color */
+  .slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background-color: var(--thumb-color); /* Ensure thumb color applies */
+    border-radius: 50%;
+    cursor: pointer;
+    margin-top: -7px; /* Centers the thumb */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Optional shadow for a modern look */
+  }
+  
+  /* Firefox Fix */
+  .slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background-color: var(--thumb-color); /* Ensure it applies */
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  /* Microsoft Edge */
+  .slider::-ms-thumb {
+    width: 20px;
+    height: 20px;
+    background-color: var(--thumb-color);
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  /* Wave animation keyframes */
+  @keyframes wave {
+    0% {
+      transform: translateX(-100%) skewX(-15deg);
+      opacity: 0;
+    }
+    20% {
+      opacity: 0.4;
+    }
+    50% {
+      opacity: 0.6;
+    }
+    80% {
+      opacity: 0.4;
+    }
+    100% {
+      transform: translateX(100%) skewX(-15deg);
+      opacity: 0;
+    }
+  }
+
+  /* Wave effect class */
+  .wave-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, #2d0536, transparent);
+    transform: translateX(-100%) skewX(-15deg);
+    pointer-events: none;
+    animation: wave 2s ease-in-out infinite;
+  }
+
+  /* Wave animation on hover - faster animation */
+  .wave-button:hover .wave-overlay {
+    animation: wave 1.2s ease-in-out infinite;
+  }
+
+  /* Subtle button pulse animation */
+  @keyframes buttonPulse {
+    0% {
+      transform: scale(1);
+      box-shadow: 0 0 20px rgba(181, 38, 214, 0.3);
+    }
+    50% {
+      transform: scale(1.02);
+      box-shadow: 0 0 30px rgba(181, 38, 214, 0.5);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 0 0 20px rgba(181, 38, 214, 0.3);
+    }
+  }
+
+  /* Button pulse class */
+  .pulse-button {
+    animation: buttonPulse 2.5s ease-in-out infinite;
+  }
+
+  /* Enhanced pulse on hover */
+  .pulse-button:hover {
+    animation: buttonPulse 1.5s ease-in-out infinite;
+  }
+  
