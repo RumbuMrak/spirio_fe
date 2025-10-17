@@ -26,6 +26,12 @@ module.exports = nextTranslate({
         port: '',
         pathname: '/**'
       },
+      {
+        protocol: 'https',
+        hostname: 'uw.hfgl2.com',
+        port: '',
+        pathname: '/**'
+      },
       ...(process.env.NEXT_PUBLIC_BACKEND_URL ? [{
         protocol: 'https',
         hostname: (process.env.NEXT_PUBLIC_BACKEND_URL)?.replace(/^(?:https?:\/\/)?(?:www\.)?/i, "") ?? 'localhost',
