@@ -18,35 +18,31 @@ module.exports = nextTranslate({
         protocol: 'https',
         hostname: '*.cloudfront.net',
         port: '',
-        pathname: '/**',
+        pathname: '/**'
       },
       {
         protocol: 'https',
         hostname: 'picsum.photos',
         port: '',
-        pathname: '/**',
+        pathname: '/**'
       },
       {
         protocol: 'https',
         hostname: 'uw.hfgl2.com',
         port: '',
-        pathname: '/**',
+        pathname: '/**'
       },
-      ...(process.env.NEXT_PUBLIC_BACKEND_URL
-        ? [
+      ...(process.env.NEXT_PUBLIC_BACKEND_URL ? [{
+        protocol: 'https',
+        hostname: (process.env.NEXT_PUBLIC_BACKEND_URL)?.replace(/^(?:https?:\/\/)?(?:www\.)?/i, "") ?? 'localhost',
+        port: '',
+        pathname: '/**'
+      }] : []),
             {
-              protocol: 'https',
-              hostname: process.env.NEXT_PUBLIC_BACKEND_URL?.replace(/^(?:https?:\/\/)?(?:www\.)?/i, '') ?? 'localhost',
-              port: '',
-              pathname: '/**',
-            },
-          ]
-        : []),
-      {
         protocol: 'http',
-        hostname: 'localhost',
+        hostname: "localhost",
         port: '8000',
-        pathname: '/**',
+        pathname: '/**'
       },
     ],
   },
@@ -198,11 +194,12 @@ module.exports = nextTranslate({
         destination: '/password-reset',
         permanent: true,
       },
-    ];
+    ]
   },
   i18n: {
     locales: ['cs'],
     defaultLocale: 'cs',
     localeDetection: false,
   },
-});
+})
+
