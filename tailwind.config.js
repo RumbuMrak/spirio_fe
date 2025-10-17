@@ -4,6 +4,7 @@ module.exports = {
   content: ['./src/pages/**/*.{ts,tsx}', './src/components/**/*.{ts,tsx}', './src/features/**/*.{ts,tsx}'],
   theme: {
     colors: {
+      // Color palettes
       primary: {
         DEFAULT: '#D41CFF',
         500: '#B526D6',
@@ -24,9 +25,7 @@ module.exports = {
         DEFAULT: '#FEBE0C',
         500: '#E28D70 ',
       },
-      background: '#18082A',
       black: '#000000',
-      highlight: '#D4F65F',
       white: '#FFFFFF',
       gray: {
         100: '#CFCFCF',
@@ -75,6 +74,13 @@ module.exports = {
         800: '#93370D',
         900: '#7A2E0E',
       },
+
+      // Design Tokens
+      background: '#18082A',
+      highlight: '#D4F65F',
+      accent: '#A04F9D',
+      'card-background': '#552F81',
+      'card-foreground': '#fae6ff',
     },
     borderRadius: {
       none: '0',

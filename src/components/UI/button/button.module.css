@@ -3,6 +3,7 @@
   align-items: center;
   justify-content: center;
   padding: 1.125rem 1.875rem;
+  letter-spacing: 0.025em;
   gap: 0.5rem;
   border-radius: theme('borderRadius.full');
   font-size: theme('fontSize.base');

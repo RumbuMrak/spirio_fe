@@ -1,4 +1,4 @@
-@import "slick-carousel/slick/slick.css";
+@import 'slick-carousel/slick/slick.css';
 
 /* Custom animation delays for enhanced notifications */
 .animation-delay-75 {
@@ -15,7 +15,8 @@
 
 /* Enhanced attention-grabbing animations */
 @keyframes urgent-pulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
     opacity: 1;
   }
@@ -30,13 +31,21 @@
 }
 
 @keyframes critical-shake {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateX(0);
   }
-  10%, 30%, 50%, 70%, 90% {
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
     transform: translateX(-2px);
   }
-  20%, 40%, 60%, 80% {
+  20%,
+  40%,
+  60%,
+  80% {
     transform: translateX(2px);
   }
 }
@@ -49,10 +58,10 @@
 
 /* Gradient System */
 :root {
-  --grad-primary-start: #5CC1FF;
-  --grad-primary-end: #B6DC36;
-  --grad-accent-start: #8C4DFF;
-  --grad-accent-end: #FF7AC3;
+  --grad-primary-start: #5cc1ff;
+  --grad-primary-end: #b6dc36;
+  --grad-accent-start: #8c4dff;
+  --grad-accent-end: #ff7ac3;
 }
 
 .bg-grad-primary {
@@ -75,10 +84,30 @@
   position: relative;
 }
 .overlay-hero::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.15));
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.15));
   pointer-events: none;
 }
 
+/* Status indicator pulsing animation */
+@keyframes status-pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgb(50 213 131 / 0.6);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgb(50 213 131 / 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgb(50 213 131 / 0);
+  }
+}
+
+.pulsing-status-online {
+  position: relative;
+  animation: status-pulse 2.4s ease-out infinite;
+}

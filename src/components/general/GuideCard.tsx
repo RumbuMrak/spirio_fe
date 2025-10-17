@@ -9,10 +9,27 @@ import router from 'next/router';
 import { Calendar, Chat, PhoneCall, VideoCamera } from '@phosphor-icons/react';
 import useBreakpoint from '@/hooks/useBreakpoint';
 import RatingBox from './RatingRank';
-const GuideCard: (props: GuideProfileType & { className?: string, hide_description?: boolean }) => JSX.Element = (props) => {
+
+type GuideCardProps = GuideProfileType & { className?: string; hide_description?: boolean };
+
+type GuideCardHeaderProps = { guide: GuideProfileType; guideSlug: string; isOnline: boolean };
+
+type GuideCardBodyProps = { guide: GuideProfileType; guideSlug: string; hide_description?: boolean };
+
+type GuideCardActionsProps = {
+  guide: GuideProfileType;
+  guideSlug: string;
+  isChatEnabled: boolean;
+  isAudioEnabled: boolean;
+  isVideoEnabled: boolean;
+  isSmallScreen: boolean;
+  isOnline: boolean;
+};
+
+const GuideCard: (props: GuideCardProps) => JSX.Element = (props) => {
   const { className, hide_description, ...guide } = props;
-  const { id, slug, avatar } = guide;
-  const guideSlug = slug || id.toString(); 
+  const { id, slug } = guide;
+  const guideSlug = slug || id.toString();
   const { isInBreakpoint } = useBreakpoint();
   const isSmallScreen = !isInBreakpoint({ from: 'sm' });
   const isOnline =
@@ -23,20 +40,10 @@ const GuideCard: (props: GuideProfileType & { className?: string, hide_descripti
     guide.call_status === 'chat-video-online' ||
     guide.call_status === 'all-online';
   const status = guide.call_status;
-  const isVideoEnabled =
-    status === 'online' ||
-    status === 'chat-video-online' ||
-    status === 'all-online';
-  const isAudioEnabled =
-    status === 'online' ||
-    status === 'audio-online' ||
-    status === 'chat-audio-online' ||
-    status === 'all-online';
-  const isChatEnabled =
-    status === 'chat-online' ||
-    status === 'chat-audio-online' ||
-    status === 'chat-video-online' ||
-    status === 'all-online';
+  const isVideoEnabled = status === 'online' || status === 'chat-video-online' || status === 'all-online';
+  const isAudioEnabled = status === 'online' || status === 'audio-online' || status === 'chat-audio-online' || status === 'all-online';
+  const isChatEnabled = status === 'chat-online' || status === 'chat-audio-online' || status === 'chat-video-online' || status === 'all-online';
+
   return (
     <div
       role={!hide_description ? 'button' : undefined}
@@ -54,159 +61,153 @@ const GuideCard: (props: GuideProfileType & { className?: string, hide_descripti
         }
       }}
       className={cn(
-        'cursor-pointer hover:ring-1 hover:ring-[#EC994D] relative flex flex-shrink-0 h-full w-full auto-rows-fr flex-col gap-3.5 overflow-hidden rounded-lg bg-gradient-to-br from-[#B526D6] to-[#DF7E60] p-0 sm:p-0',
-        className
+        'border-accent/60 hover:border-accent group relative flex h-full w-full flex-shrink-0 cursor-pointer auto-rows-fr flex-col gap-3.5 overflow-hidden rounded-lg border-2 bg-card-background/80 p-0 text-card-foreground hover:bg-card-background/100 sm:p-0',
+        isOnline && 'border-success-600 hover:border-success-600',
+        className,
       )}
     >
-      <div className="relative w-full flex justify-center">
-        <div className="relative w-full aspect-square min-h-[96px] overflow-hidden rounded-lg bg-white/20">
-          <Image
-            src={
-              avatar
-                ? getImageUrl(avatar)
-                : 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='
-            }
-            fill
-            className="object-cover object-center"
-            alt={guideName(guide)}
-          />
-          <div className="absolute top-2 right-2">
-            <RatingBox rating={guide.rating ?? 4.6} />
-          </div>
-        </div>
-        <Button
-          href={route.discoverDetail(id)}
-          className={cn(
-            'absolute -bottom-3 left-1/2 -translate-x-1/2 px-3 py-0.5 text-[10px] font-semibold rounded-md min-w-32',
-            'text-white whitespace-nowrap bg-gradient-to-r',
-            isOnline
-              ? 'from-[#D5F65F] to-[#6B8E23] text-[#252F04]'
-              : guide.call_status === 'busy'
-                ? 'from-[#0E7490] to-[#0A4F6C] text-[#E5E7EB]'
-                : 'from-[#EC994D] to-[#B77906] text-[#500D0D]'
-          )}
-          size="xs"
-        >
-          {isOnline
-            ? 'Online'
-            : guide.call_status === 'busy'
-              ? 'Obsazeno'
-              : 'Rezervujte termín'}
-        </Button>
+      <GuideCardHeader guide={guide} guideSlug={guideSlug} isOnline={isOnline} />
+
+      <div className="flex grow flex-col">
+        <GuideCardBody guide={guide} guideSlug={guideSlug} hide_description={hide_description} />
+        <GuideCardActions
+          guide={guide}
+          guideSlug={guideSlug}
+          isOnline={isOnline}
+          isChatEnabled={isChatEnabled}
+          isAudioEnabled={isAudioEnabled}
+          isVideoEnabled={isVideoEnabled}
+          isSmallScreen={isSmallScreen}
+        />
       </div>
-      <div className="flex grow flex-col items-center text-center">
-        <div className="text-lg font-600 sm:text-xl mt-1 mb-3  [text-shadow:2px_2px_4px_rgba(0,0,0,0.6)]">{guideName(guide)}</div>
-        {guide.techniques && (
-          <div className="flex flex-wrap justify-center gap-1 text-xs text-white px-5">
-            {guide.techniques
-              .filter((tech) => tech.title.length <= 18)
-              .slice(0, 3)
-              .map((tech, idx) => (
-                <span key={idx} className="bg-white/20 rounded-full px-2">
-                  {tech.title}
-                </span>
-              ))}
-          </div>
-        )}
-        {hide_description && (
-          <p className="mb-3.5 mt-4 text-s px-2">
-            {(() => {
-              return (
-                <>
-                  {}
-                  {}
-                  <Link
-                    href={route.discoverDetail(id)}
-                    className="ml-1 text-white text-gradient hover:text-primary-800"
-                  >
-                    Více o mně
-                  </Link>
-                  {}
-                </>
-              );
-            })()}
-          </p>
-        )}
-        <div className="flex justify-between items-center text-sm gap-4 text-white/90 mt-4 border-t border-white/10 pt-3 pb-4">
-          {}
-          <div className="flex-1 text-center">
-            <div className="font-semibold"><Link
-              href={route.discoverDetail(id)}
-              className="ml-1 text-white underline hover:text-primary-800"
-            >
-              Více o mně
-            </Link></div>
-            <div className="text-xs text-white/60 mt-1"></div>
-          </div>
-        </div>
-        <div className="flex justify-center gap-2 mt-auto mb-2 sm:w-full w-28">
-          {[
-            {
-              icon: <Chat size={20} weight="fill" className="text-[#FCD34D]  w-4 h-4 sm:w-5 sm:h-5" />,
-              onClick: isChatEnabled
-                ? () =>
-                  router.push(route.discoverDetail(id))
-                : undefined,
-              disabled: !isChatEnabled,
-              name: 'Chat',
-            },
-            {
-              icon: <PhoneCall size={20} weight="fill" className="text-[#38BDF8]  w-4 h-4 sm:w-5 sm:h-5" />,
-              onClick: isAudioEnabled
-                ? () =>
-                  router.push(route.discoverDetail(id))
-                : undefined,
-              disabled: !isAudioEnabled,
-              name: 'Audio',
-            },
-            {
-              icon: <VideoCamera weight="fill" size={20} className="text-[#B6DC36] w-4 h-4 sm:w-5 sm:h-5" />,
-              onClick: isVideoEnabled
-                ? () =>
-                  router.push(route.discoverDetail(id))
-                : undefined,
-              disabled: !isVideoEnabled,
-              name: 'Video',
-            },
-            {
-              icon: <Calendar size={20} weight="fill" className="text-white w-4 h-4 sm:w-5 sm:h-5" />,
-              onClick: () =>
-                router.push(route.discoverDetail(id)),
-              name: 'Rezervace',
-            },
-          ].map(({ icon, onClick, disabled, name }, idx) => (
-            (
-              <div key={idx} className="flex flex-col items-center space-y-1">
-                <Button
-                  key={idx}
-                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                    e.stopPropagation();
-                    if (onClick) onClick();
-                  }}
-                  disabled={disabled}
-                  className={cn(
-                    '!rounded-md sm:min-h-[15px] sm:max-w-[15px] sm:!border sm:!border-primary-650/30 !bg-transparent sm:!bg-primary-725/30 shadow-sm  !sm:bg-primary-725/25 transition p-1 sm:p-2 w-10 h-10 sm:w-12 sm:h-12 flex items-center',
-                    'p-1 sm:p-2',
-                    disabled && 'opacity-10 cursor-not-allowed'
-                  )}
-                  size={isSmallScreen ? 'xs' : undefined}>
-                  {}
-                  {disabled ? (
-                    <span className="opacity-20">{icon}</span>
-                  ) : (
-                    <span>{icon}</span>
-                  )}
-                </Button>
-                {disabled ? (
-                  <span className="text-xs hidden sm:block   sm:!text-black/40 opacity-80">{name}</span>
-                ) : (
-                  <span className="text-xs hidden sm:block sm:text-white">{name}</span>
-                )}
-              </div>
-            )))}
-        </div>
-      </div>
-  </div>
+    </div>
   );
 };
+
+const GuideCardHeader: React.FC<GuideCardHeaderProps> = ({ guide, guideSlug, isOnline }) => {
+  const { avatar } = guide;
+  return (
+    <div className="relative flex w-full justify-center border-b border-white/10">
+      <div className="relative aspect-square min-h-[96px] w-full rounded-t-md ">
+        <Image
+          src={avatar ? getImageUrl(avatar) : 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='}
+          fill
+          className="object-cover object-center lg:opacity-90 lg:saturate-[90%] lg:group-hover:opacity-100 lg:group-hover:saturate-[100%]"
+          alt={guideName(guide)}
+        />
+        <div className="absolute -bottom-3.5 left-1/2 z-20 -translate-x-1/2">
+          <Link
+            href={route.discoverDetail(guideSlug)}
+            className={cn(
+              'flex w-fit items-center gap-2 rounded-full border border-white/10 px-5 py-1.5 leading-none',
+              isOnline && 'bg-success-100 text-success-700',
+              guide.call_status === 'busy' && 'bg-warning-100 text-warning-600',
+              guide.call_status === 'offline' && 'hidden',
+            )}
+          >
+            <div
+              className={cn('size-2.5 rounded-full', isOnline && 'pulsing-status-online -ml-1 bg-success-600', guide.call_status === 'busy' && 'hidden')}
+            ></div>
+
+            <div className="text-sm font-600 uppercase tracking-wider">
+              {isOnline ? 'Online' : guide.call_status === 'busy' ? 'Obsazeno' : 'Rezervujte termín'}
+            </div>
+          </Link>
+        </div>
+        <div className="absolute right-2 top-2">
+          <RatingBox rating={guide.rating ?? 4.6} />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const GuideCardBody: React.FC<GuideCardBodyProps> = ({ guide, guideSlug, hide_description }) => {
+  return (
+    <div className="flex grow flex-col px-4 pb-4">
+      <div className="mt-3 text-center text-lg font-600 [text-shadow:2px_2px_4px_rgba(0,0,0,0.6)]  sm:text-xl">{guideName(guide)}</div>
+      {guide.techniques && (
+        <div className="mt-3 flex flex-wrap justify-center gap-2">
+          {guide.techniques
+            .filter((tech) => tech.title.length <= 18)
+            .slice(0, 3)
+            .map((tech, idx) => (
+              <span key={idx} className=" rounded-full bg-white/20 px-2 py-1 text-xs leading-none">
+                {tech.title}
+              </span>
+            ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+const GuideCardActions: React.FC<GuideCardActionsProps> = ({ guideSlug, isChatEnabled, isAudioEnabled, isVideoEnabled, isSmallScreen, guide, isOnline }) => {
+  const isBusy = guide.call_status === 'busy';
+  const isOffline = guide.call_status === 'offline';
+
+  const connectionTypes = [
+    {
+      icon: <Chat size={20} weight="fill" className="size-3 fill-card-foreground/50 sm:size-4" />,
+      name: 'Chat',
+      enabled: isChatEnabled,
+    },
+    {
+      icon: <PhoneCall size={20} weight="fill" className="size-3 fill-card-foreground/50 sm:size-4" />,
+      name: 'Audio',
+      enabled: isAudioEnabled,
+    },
+    {
+      icon: <VideoCamera weight="fill" size={20} className="size-3 fill-card-foreground/50 sm:size-4" />,
+      name: 'Video',
+      enabled: isVideoEnabled,
+    },
+  ].filter((type) => type.enabled);
+
+  return (
+    <div className="border-white/10 px-4 pb-6 pt-4">
+      {isOnline ? (
+        <div className="flex flex-col items-center gap-4">
+          {connectionTypes.length > 0 && (
+            <div className="flex justify-center gap-6">
+              {connectionTypes.map(({ icon, name }, idx) => (
+                <div key={idx} className="flex items-center gap-1.5">
+                  {icon}
+                  <span className="text-xs font-500 text-card-foreground/70">{name}</span>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <Button
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+              e.stopPropagation();
+              router.push(route.discoverDetail(guideSlug));
+            }}
+            className="h-12 w-full"
+            size={isSmallScreen ? 'sm' : 'default'}
+            color="transparent-white"
+          >
+            <PhoneCall size={20} weight="fill" className="mr-0.5" />
+            Zavolat
+          </Button>
+        </div>
+      ) : isBusy || isOffline ? (
+        <Button
+          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+            e.stopPropagation();
+            router.push(route.discoverDetail(guideSlug));
+          }}
+          className="h-12 w-full text-card-foreground/70 hover:text-card-foreground"
+          size={isSmallScreen ? 'sm' : 'default'}
+          color="transparent"
+        >
+          <Calendar size={20} weight="fill" className="mr-2" />
+          Rezervovat termín
+        </Button>
+      ) : null}
+    </div>
+  );
+};
+
 export default GuideCard;
