@@ -110,7 +110,7 @@ const GuideCardHeader: React.FC<GuideCardHeaderProps> = ({ guide, guideSlug, isO
             ></div>
 
             <div className="text-sm font-600 uppercase tracking-wider">
-              {isOnline ? 'Online' : guide.call_status === 'busy' ? 'Obsazeno' : 'Rezervujte termín'}
+              {isOnline ? 'Online' : guide.call_status === 'busy' ? 'Obsazeno' : 'Rezervuj termín'}
             </div>
           </Link>
         </div>
@@ -127,7 +127,7 @@ const GuideCardBody: React.FC<GuideCardBodyProps> = ({ guide, guideSlug, hide_de
     <div className="flex grow flex-col px-4 pb-4">
       <div className="mt-3 text-center text-lg font-600 [text-shadow:2px_2px_4px_rgba(0,0,0,0.6)]  sm:text-xl">{guideName(guide)}</div>
       {guide.techniques && (
-        <div className="mt-3 flex flex-wrap justify-center gap-2">
+        <div className="mt-3 flex flex-wrap justify-center gap-2 text-center">
           {guide.techniques
             .filter((tech) => tech.title.length <= 18)
             .slice(0, 3)
@@ -145,20 +145,21 @@ const GuideCardBody: React.FC<GuideCardBodyProps> = ({ guide, guideSlug, hide_de
 const GuideCardActions: React.FC<GuideCardActionsProps> = ({ guideSlug, isChatEnabled, isAudioEnabled, isVideoEnabled, isSmallScreen, guide, isOnline }) => {
   const isBusy = guide.call_status === 'busy';
   const isOffline = guide.call_status === 'offline';
+  const iconSize = isSmallScreen ? 14 : 16;
 
   const connectionTypes = [
     {
-      icon: <Chat size={20} weight="fill" className="size-3 fill-card-foreground/50 sm:size-4" />,
+      icon: <Chat size={iconSize} weight="fill" className="fill-card-foreground/50" />,
       name: 'Chat',
       enabled: isChatEnabled,
     },
     {
-      icon: <PhoneCall size={20} weight="fill" className="size-3 fill-card-foreground/50 sm:size-4" />,
+      icon: <PhoneCall size={iconSize} weight="fill" className="fill-card-foreground/50" />,
       name: 'Audio',
       enabled: isAudioEnabled,
     },
     {
-      icon: <VideoCamera weight="fill" size={20} className="size-3 fill-card-foreground/50 sm:size-4" />,
+      icon: <VideoCamera weight="fill" size={iconSize} className="fill-card-foreground/50" />,
       name: 'Video',
       enabled: isVideoEnabled,
     },
@@ -167,13 +168,13 @@ const GuideCardActions: React.FC<GuideCardActionsProps> = ({ guideSlug, isChatEn
   return (
     <div className="border-white/10 px-4 pb-6 pt-4">
       {isOnline ? (
-        <div className="flex flex-col items-center gap-4">
+        <div className="flex flex-col items-center gap-3">
           {connectionTypes.length > 0 && (
-            <div className="flex justify-center gap-6">
+            <div className="flex flex-wrap justify-center gap-x-2 gap-y-2 sm:gap-x-4">
               {connectionTypes.map(({ icon, name }, idx) => (
-                <div key={idx} className="flex items-center gap-1.5">
+                <div key={idx} className="flex items-center gap-1 whitespace-nowrap">
                   {icon}
-                  <span className="text-xs font-500 text-card-foreground/70">{name}</span>
+                  <span className="text-[10px] font-500 leading-none text-card-foreground/70 sm:text-xs">{name}</span>
                 </div>
               ))}
             </div>
@@ -184,12 +185,12 @@ const GuideCardActions: React.FC<GuideCardActionsProps> = ({ guideSlug, isChatEn
               e.stopPropagation();
               router.push(route.discoverDetail(guideSlug));
             }}
-            className="h-12 w-full"
+            className="h-10 w-full sm:h-12"
             size={isSmallScreen ? 'sm' : 'default'}
-            color="transparent-white"
+            color="gradient"
           >
-            <PhoneCall size={20} weight="fill" className="mr-0.5" />
-            Zavolat
+            <PhoneCall size={isSmallScreen ? 16 : 20} weight="fill" className="mr-1.5 flex-shrink-0 sm:mr-2" />
+            <span className="text-[11px] leading-tight sm:text-sm">Zavolat</span>
           </Button>
         </div>
       ) : isBusy || isOffline ? (
@@ -198,12 +199,12 @@ const GuideCardActions: React.FC<GuideCardActionsProps> = ({ guideSlug, isChatEn
             e.stopPropagation();
             router.push(route.discoverDetail(guideSlug));
           }}
-          className="h-12 w-full text-card-foreground/70 hover:text-card-foreground"
+          className="h-10 w-full text-card-foreground/70 hover:text-card-foreground sm:h-12"
           size={isSmallScreen ? 'sm' : 'default'}
           color="transparent"
         >
-          <Calendar size={20} weight="fill" className="mr-2" />
-          Rezervovat termín
+          <Calendar size={isSmallScreen ? 16 : 20} weight="fill" className="mr-1.5 flex-shrink-0 sm:mr-2" />
+          <span className="text-[11px] leading-tight sm:text-sm">Rezervovat termín</span>
         </Button>
       ) : null}
     </div>
