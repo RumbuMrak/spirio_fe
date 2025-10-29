@@ -91,6 +91,16 @@
   pointer-events: none;
 }
 
+.bg-mesh-gradient {
+  background:
+    radial-gradient(at 17.2% 29.2%, #c16e87 0px, transparent 50%),
+    radial-gradient(at 77.1% 67.5%, #83468c 0px, transparent 50%),
+    radial-gradient(at 36.3% 77.1%, #b526d6 0px, transparent 50%),
+    radial-gradient(at 76.4% 26.4%, #612f74 0px, transparent 50%) #19082c;
+  mix-blend-mode: normal;
+  backdrop-filter: blur(20px) contrast(100%) brightness(100%);
+}
+
 /* Status indicator pulsing animation */
 @keyframes status-pulse {
   0% {
